@@ -165,6 +165,26 @@ const watch = () => {
 				`🦊 Elysia is running at http://${server.hostname}:${server.port}`,
 			)
 		})
+
+	chokidar
+		.watch('./lib', { persistent: true })
+		.on('all', async (event, path) => {
+			console.log(event, path)
+
+			for (const path of Object.keys(require.cache)) {
+				delete require.cache[path]
+			}
+
+			const app = createApp()
+			app.use(await fileRouter())
+
+			server.reload({ fetch: app.fetch })
+
+			clearScreen()
+			console.log(
+				`🦊 Elysia is running at http://${server.hostname}:${server.port}`,
+			)
+		})
 }
 
 watch()
