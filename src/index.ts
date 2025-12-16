@@ -4,6 +4,11 @@ import { Elysia } from 'elysia'
 import { logger } from '$lib/logger'
 import { auth } from '$lib/auth'
 
+import { OpenAPI } from './better-auth-openapi'
+
+const components = await OpenAPI.components
+const paths = await OpenAPI.getPaths()
+
 export const createApp = () =>
 	new Elysia()
 		.use(
@@ -17,6 +22,10 @@ export const createApp = () =>
 		.use(
 			openapi({
 				path: '/docs',
+				documentation: {
+					components: components,
+					paths: paths,
+				},
 			}),
 		)
 		.mount(auth.handler)

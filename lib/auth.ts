@@ -2,6 +2,7 @@ import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { db } from './db'
 import * as schema from './db/schema'
+import { openAPI } from 'better-auth/plugins'
 
 export const auth = betterAuth({
 	baseURL: Bun.env.API_URL,
@@ -35,5 +36,5 @@ export const auth = betterAuth({
 	telemetry: {
 		enabled: false,
 	},
-	plugins: [],
+	plugins: [openAPI()],
 })
