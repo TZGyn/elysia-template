@@ -75,7 +75,7 @@ export const logger = ({
 				'<--',
 				ctx.request.method,
 				ctx.path,
-				colorStatus(response.code || ctx.set.status),
+				colorStatus(response?.code || ctx.set.status),
 				`(${time(ctx.start)})`,
 			)
 		})
